@@ -3,6 +3,7 @@ import dataaccess.MongoDB
 import fileOperations.FileOperations
 import services.MongoStorageService
 import transformer.AssociateUrlsToUserId
+import utils.Constants
 
 object AssociateUrlsToIds {
 
@@ -14,7 +15,7 @@ object AssociateUrlsToIds {
     val associateUrlsToUserId = new AssociateUrlsToUserId()
     val fileOperations = new FileOperations
 
-    val urlData = fileOperations.readFromFile("/Users/alli01/my-projects/gender-recognition/resources/input/url_data_1.json")
+    val urlData = fileOperations.readFromFile(Constants.InputFile2)
     val associatedUrlsToId = associateUrlsToUserId.getUrlsAssociatedData(urlData, mongoStorageService)
     mongoDB.client.close()
 
@@ -23,7 +24,6 @@ object AssociateUrlsToIds {
     println(">>>>>>>>>writing to the file is done successfully")
 
   }
-
 }
 
 

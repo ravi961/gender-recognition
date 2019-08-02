@@ -3,6 +3,8 @@ package fileOperations
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
+import utils.Constants
+
 import scala.io.Source
 
 class FileOperations {
@@ -12,6 +14,6 @@ class FileOperations {
   }
 
   def writeToFile(data: Seq[String]): Unit = {
-    Files.write(Paths.get("/Users/alli01/my-projects/gender-recognition/resources/output/part1.txt"), data.mkString("\n").getBytes(StandardCharsets.UTF_8))
+    Files.write(Paths.get(Constants.OutPutFile2), data.mkString("\n").getBytes(StandardCharsets.UTF_8))
   }
 }

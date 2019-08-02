@@ -10,7 +10,8 @@ class AssociateUrlsToUserId {
     val urlDataInJson = Json.parse(urlData)
     val urlsDataSeq = (urlDataInJson \ "url_data").as[Seq[JsValue]]
     println(">>>>>>parsing into json completed")
-    var count = 0
+    var presnetCount = 0
+    var absentCount = 0
     val associatedUrlsToId: Seq[String] = urlsDataSeq.map {
       urlData =>
         val link = (urlData \ "link").as[String]
@@ -18,14 +19,15 @@ class AssociateUrlsToUserId {
         val userIdList = mongoStorageService.getUserIds(link)
 
         if (userIdList.nonEmpty) {
-          count = count + 1
-          println("-----count: \n" + count)
+          presnetCount = presnetCount + 1
+          println("-----presentCount: " + presnetCount)
           //          println("-----list: "+ link +userIdList)
-          userIdList.mkString(":") + " " + urlId + " " + link
+          userIdList.mkString(":") + "," + urlId + "," + link + "\n"
         }
         else {
-          println("-----in else")
-          "NA" + " " + urlId + " " + link
+          absentCount = absentCount + 1
+          println("-----absentCount: " + absentCount)
+          "NA" + "," + urlId + "," + link + "\n"
         }
     }
     print(">>>>> completed association")
