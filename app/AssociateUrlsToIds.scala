@@ -4,6 +4,11 @@ import fileOperations.FileOperations
 import services.MongoStorageService
 import transformer.AssociateUrlsToUserId
 import utils.Constants
+import scala.concurrent.ExecutionContext.Implicits.global
+
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
+import scala.util.{Failure, Success}
 
 object AssociateUrlsToIds {
 
@@ -15,12 +20,25 @@ object AssociateUrlsToIds {
     val associateUrlsToUserId = new AssociateUrlsToUserId()
     val fileOperations = new FileOperations
 
-    val urlData = fileOperations.readFromFile(Constants.InputFile2)
+    val urlData = fileOperations.readFromFile("/Users/alli01/my-projects/gender-recognition/resources/input/Urls_data2.json")
     val associatedUrlsToId = associateUrlsToUserId.getUrlsAssociatedData(urlData, mongoStorageService)
-    mongoDB.client.close()
+
+
+    associatedUrlsToId.onComplete {
+      case Success(value) => {
+        println(">>>>>writing started")
+        fileOperations.writeToFile(value)
+        println(">>>>>>>>>writing to the file is done successfully")
+        mongoDB.client.close()
+      }
+      case Failure(exception) => {
+        println("exception occured: "+ exception)
+        mongoDB.client.close()
+      }
+    }
 
     println(">>>>>writing started")
-    fileOperations.writeToFile(associatedUrlsToId)
+    fileOperations.writeToFile(Await.result(associatedUrlsToId, Duration.Inf))
     println(">>>>>>>>>writing to the file is done successfully")
 
   }

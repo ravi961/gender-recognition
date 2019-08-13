@@ -12,4 +12,7 @@ object Constants {
   val OutPutFile1 = s"${resourceOutputPath}urlsToUserId1.csv"
   val OutPutFile2 = s"${resourceOutputPath}urlsToUserId2.csv"
   val OutPutFile3 = s"${resourceOutputPath}urlsToUserId3.csv"
+  val OutPutFile4 = s"${resourceOutputPath}urlsToUserId4.csv"
+  val OutPutFile5 = s"${resourceOutputPath}urlsToUserId5.csv"
+  val OutPutFile6 = s"${resourceOutputPath}urlsToUserId6.csv"
 }

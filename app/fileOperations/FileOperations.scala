@@ -14,6 +14,6 @@ class FileOperations {
   }
 
   def writeToFile(data: Seq[String]): Unit = {
-    Files.write(Paths.get(Constants.OutPutFile2), data.mkString("\n").getBytes(StandardCharsets.UTF_8))
+    Files.write(Paths.get("/Users/alli01/my-projects/gender-recognition/resources/output/output1.csv"), data.mkString("\n").getBytes(StandardCharsets.UTF_8))
   }
 }
